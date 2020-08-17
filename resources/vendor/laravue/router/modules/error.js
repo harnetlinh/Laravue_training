@@ -4,6 +4,7 @@ import Layout from '@/views/layout/Layout';
 const errorRouter = {
   path: '/error',
   component: Layout,
+  hidden: true,
   redirect: 'noredirect',
   name: 'ErrorPages',
   meta: {

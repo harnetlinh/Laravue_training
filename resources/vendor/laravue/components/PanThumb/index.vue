@@ -79,7 +79,7 @@ export default {
   height: inherit;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.05);
+  /* box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.05); */
 }
 
 .pan-info h3 {
@@ -129,9 +129,9 @@ export default {
   background: rgba(255, 255, 255, 0.5);
 }
 
-.pan-item:hover .pan-thumb {
+/* .pan-item:hover .pan-thumb {
   transform: rotate(-110deg);
-}
+} */
 
 .pan-item:hover .pan-info p a {
   opacity: 1;

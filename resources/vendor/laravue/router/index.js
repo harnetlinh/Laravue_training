@@ -50,19 +50,20 @@ export const constantRouterMap = [
   },
   {
     path: '/404',
-    redirect: { name: 'Page404' },
+    redirect: { name: 'Page 404' },
     component: require('@/views/ErrorPage/404').default,
-    hidden: true,
   },
   {
     path: '/401',
     component: require('@/views/ErrorPage/401').default,
-    hidden: true,
   },
   {
     path: '',
     component: Layout,
     redirect: 'dashboard',
+    meta: {
+      title: 'Dashboard',
+    },
     children: [
       {
         path: 'dashboard',
@@ -73,12 +74,36 @@ export const constantRouterMap = [
     ],
   },
   {
+    path: '/store',
+    component: Layout,
+    redirect: '/store/list',
+    name: 'Store',
+    meta: {
+      title: 'Store',
+      icon: 'example',
+    },
+    children: [
+      {
+        path: 'create',
+        component: require('@/views/Store/Create/index').default,
+        name: 'Create',
+        meta: { title: 'Create' },
+      },
+      {
+        path: 'management',
+        component: require('@/views/Store/Management/index').default,
+        name: 'Management',
+        meta: { title: 'Management' },
+      }
+    ],
+  },
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/list',
     name: 'Example',
     meta: {
-      title: 'example',
+      title: 'Example',
       icon: 'example',
     },
     children: [
@@ -92,13 +117,13 @@ export const constantRouterMap = [
         path: 'tree-table',
         component: require('@/views/table/TreeTable/TreeTable').default,
         name: 'TreeTableDemo',
-        meta: { title: 'treeTable' },
+        meta: { title: 'Tree Table' },
       },
       {
         path: 'custom-tree-table',
         component: require('@/views/table/TreeTable/CustomTreeTable').default,
         name: 'CustomTreeTableDemo',
-        meta: { title: 'customTreeTable' },
+        meta: { title: 'Custom Tree Table' },
       },
     ],
   },
@@ -112,7 +137,7 @@ export const constantRouterMap = [
         path: 'index',
         component: require('@/views/documentation/index').default,
         name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', noCache: true },
+        meta: { title: 'Documentation', icon: 'documentation', noCache: true },
       },
     ],
   },
@@ -129,6 +154,10 @@ export const constantRouterMap = [
     ],
   },
   errorRouter,
+  {
+    path: '*',
+    redirect: { name: 'Page404' }
+  }
 ];
 
 export default new Router({
