@@ -48,7 +48,7 @@ export default {
       rules: {
         name: [
           { required: true, message: 'Please input Store name', trigger: 'blur' },
-          { min: 3, max: 20, message: 'Length should be 3 to 5', trigger: 'blur' }
+          { min: 3, max: 20, message: 'Length should be 3 to 20', trigger: 'blur' }
         ],
         type: [
           { required: true, message: 'Please select Type store', trigger: 'change' }
@@ -82,10 +82,7 @@ export default {
           return false;
         }
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
+    }
   }
 }
 </script>

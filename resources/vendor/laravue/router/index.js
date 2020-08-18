@@ -80,7 +80,7 @@ export const constantRouterMap = [
     name: 'Store',
     meta: {
       title: 'Store',
-      icon: 'example',
+      icon: 'international',
     },
     children: [
       {
@@ -98,60 +98,32 @@ export const constantRouterMap = [
     ],
   },
   {
-    path: '/example',
+    path: '/product',
     component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
+    redirect: '/product/list',
+    name: 'Product',
     meta: {
-      title: 'Example',
-      icon: 'example',
+      title: 'Product',
+      icon: 'shopping'
     },
     children: [
       {
-        path: 'complex-table',
-        component: require('@/views/table').default,
-        name: 'Table',
-        meta: { title: 'Table' },
+        path: 'create',
+        component: require('@/views/Product/Create/index').default,
+        name: 'Create',
+        meta: {
+          title: 'Create'
+        }
       },
       {
-        path: 'tree-table',
-        component: require('@/views/table/TreeTable/TreeTable').default,
-        name: 'TreeTableDemo',
-        meta: { title: 'Tree Table' },
-      },
-      {
-        path: 'custom-tree-table',
-        component: require('@/views/table/TreeTable/CustomTreeTable').default,
-        name: 'CustomTreeTableDemo',
-        meta: { title: 'Custom Tree Table' },
-      },
-    ],
-  },
-  nestedRouter,
-  {
-    path: '/documentation',
-    component: Layout,
-    redirect: '/documentation/index',
-    children: [
-      {
-        path: 'index',
-        component: require('@/views/documentation/index').default,
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', noCache: true },
-      },
-    ],
-  },
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: require('@/views/form/index').default,
-        meta: { title: 'Form', icon: 'form' },
-      },
-    ],
+        path: 'management',
+        component: require('@/views/Product/Management/index').default,
+        name: 'Management',
+        meta: {
+          title: 'Management'
+        }
+      }
+    ]
   },
   errorRouter,
   {
