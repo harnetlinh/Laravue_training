@@ -17,9 +17,9 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json(["data"=>"fake"]);//response()->json(new JsonResponse(ProductResource::collection(Product::all()),'OK'),200);
+        return response()->json(new JsonResponse(ProductResource::collection(Product::all())));
     }
-
+    //controller
     /**
      * Store a newly created resource in storage.
      *
