@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-table
-      :data="tableDataToy"
-      :default-sort = "{prop: 'name madein material'}"
+      :data="tableData"
+      :default-sort = "{prop: 'name madein material typeproduct'}"
       style="width: 100%">
       <el-table-column
         sortable
@@ -13,9 +13,12 @@
         </template>
       </el-table-column>
       <el-table-column
+        sortable
+        prop="typeproduct"
         label="Type Product">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.typeProduct }}</span>
+          <span style="margin-left: 10px" v-if="scope.row.typeProduct == 1"> Toy </span>
+          <span style="margin-left: 10px" v-if="scope.row.typeProduct == 2"> Canndy </span>
         </template>
       </el-table-column>
       <el-table-column
@@ -28,10 +31,27 @@
       </el-table-column>
       <el-table-column
         sortable
-        prop="material"
-        label="Material">
+        prop="detail"
+        label="Detail">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.Material }}</span>
+          <span style="margin-left: 10px" v-if="scope.row.typeProduct == 1">Material: {{ scope.row.Material }}</span>
+          <span style="margin-left: 10px" v-if="scope.row.typeProduct == 2">Sugar: {{ scope.row.Sugar }}%</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        sortable
+        prop="brand"
+        label="Brand">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.Brand }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        sortable
+        prop="price"
+        label="Price">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.Price }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -49,18 +69,27 @@
     </el-table>
 
     <el-dialog :visible.sync="dialogFormVisible" title="Edit">
-      <el-form ref="dataForm" :rules="rules" :model="tempToy" label-position="left" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" style="width: 400px; margin-left:50px;">
         <el-form-item label="Product Name" label-width="120px">
-          <el-input v-model="tempToy.productName"/>
+          <el-input v-model="temp.productName"/>
         </el-form-item>
         <el-form-item label="Product Type" label-width="120px">
-          <el-input v-model="tempToy.typeProduct"/>
+          <el-input v-model="temp.typeProduct" :disabled="true"/>
         </el-form-item>
         <el-form-item label="Made in" label-width="120px">
-          <el-input v-model="tempToy.Madein"/>
+          <el-input v-model="temp.Madein"/>
         </el-form-item>
-        <el-form-item label="Material" label-width="120px">
-          <el-input v-model="tempToy.Material"/>
+        <el-form-item v-if="temp.typeProduct == 1" label="Material" label-width="120px">
+          <el-input v-model="temp.Material"/>
+        </el-form-item>
+        <el-form-item v-if="temp.typeProduct == 2" label="Sugar" label-width="120px">
+          <el-input-number v-model="temp.Sugar" controls-position="right" :min="0" :max="100"></el-input-number>
+        </el-form-item>
+        <el-form-item label="Brand" label-width="120px">
+          <el-input v-model="temp.Brand"/>
+        </el-form-item>
+        <el-form-item label="Price" label-width="120px">
+          <el-input-number v-model="temp.Price" controls-position="right" :min="1"></el-input-number>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -79,47 +108,44 @@
 export default {
   data() {
     return {
-      tableDataToy: [
+      tableData: [
         {
           id: 1,
           productName: 'May Bay Do Choi',
-          typeProduct: 'Toy',
+          typeProduct: 1,
           Madein: 'Viet Nam',
           Material: 'Plastic',
+          Brand: 'VietNam',
+          Price: 10000
         },
         {
           id: 2,
           productName: 'ABC',
-          typeProduct: 'Toy',
+          typeProduct: 1,
           Madein: 'USA',
           Material: 'Woods',
+          Brand: 'HaNoi',
+          Price: 500
+        },
+        {
+          id: 2,
+          productName: 'ABC',
+          typeProduct: 2,
+          Madein: 'USA',
+          Sugar: 20,
+          Brand: 'HaNoi',
+          Price: 100
         },
       ],
-      tableDataCanndy: [
-        {
-          id: 1,
-          productName: 'Keo Thien Duong',
-          typeProduct: 'Canndy',
-          Madein: 'Viet Nam',
-          Sugar: '0',
-        }
-      ],
-      tempToy: {
+      temp: {
         id: undefined,
         productName: '',
         typeProduct: '',
         Madein: '',
         Material: '',
+        Brand: '',
+        Price: null
       },
-      tempCanndy: [
-        {
-          id: null,
-          productName: '',
-          typeProduct: '',
-          Madein: '',
-          Sugar: '',
-        }
-      ],
       dialogFormVisible: false,
       rules: {
 
@@ -128,15 +154,15 @@ export default {
   },
   methods: {
     handleEdit(row) {
-      this.tempToy = Object.assign({}, row);
+      this.temp = Object.assign({}, row);
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate();
       });
     },
     handleDelete(row) {
-      const index = this.tableDataToy.indexOf(row);
-      if(this.tableDataToy.splice(index, 1)){
+      const index = this.tableData.indexOf(row);
+      if(this.tableData.splice(index, 1)){
         this.$message({
           message: 'Delete successfully!',
           type: 'success'

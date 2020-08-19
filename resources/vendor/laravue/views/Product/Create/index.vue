@@ -18,10 +18,16 @@
         <el-input v-model="ruleForm.made"></el-input>
       </el-form-item>
       <el-form-item  v-if="this.ruleForm.type == 1" label="Sugar" label-width="120px">
-        <el-input-number v-model="ruleForm.sugar" :min="0" :max="100"></el-input-number>
+          <el-input-number v-model="ruleForm.Sugar" controls-position="right" :min="0" :max="100"></el-input-number>
       </el-form-item>
       <el-form-item  v-if="this.ruleForm.type == 2" label="Material" label-width="120px">
         <el-input v-model="ruleForm.material"></el-input>
+      </el-form-item>
+      <el-form-item label="Brand" prop="brand" label-width="120px">
+        <el-input v-model="ruleForm.brand"></el-input>
+      </el-form-item>
+      <el-form-item label="Price" prop="price" label-width="120px">
+        <el-input-number v-model="ruleForm.price" controls-position="right" :min="1"></el-input-number>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
@@ -43,7 +49,9 @@ export default {
         type: '',
         made: '',
         sugar: '',
-        material: ''
+        material: '',
+        brand: '',
+        price: ''
       },
       rules: {
         name: [
@@ -55,6 +63,9 @@ export default {
         ],
         made: [
           { required: true, message: 'Please input Made', trigger: 'blur' }
+        ],
+        brand: [
+          { required: true, message: 'Please input Brand', trigger: 'blur' }
         ]
       },
     };
