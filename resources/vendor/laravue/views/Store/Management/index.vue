@@ -148,7 +148,8 @@ export default {
         this.$refs['dataForm'].clearValidate();
       });
     },
-    handleDelete(index, row) {
+    handleDelete(row) {
+      const index = this.tableData.indexOf(row);
       if(this.tableData.splice(index, 1)){
         this.$message({
           message: 'Delete successfully!',
@@ -165,13 +166,13 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$message({
-          message: 'Congrats! You have successfully created your store',
+          message: 'Congrats! Update successfully',
           type: 'success'
         });
         this.dialogFormVisible = false;
         } else {
           this.$message({
-            message: 'Warning! You have not completed the required information',
+            message: 'Warning! Update failed',
             type: 'warning'
           });
           return false;
