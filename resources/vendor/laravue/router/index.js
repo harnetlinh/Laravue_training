@@ -86,14 +86,14 @@ export const constantRouterMap = [
       {
         path: 'create',
         component: require('@/views/Store/Create/index').default,
-        name: 'Create',
-        meta: { title: 'Create' },
+        name: 'CreateStore',
+        meta: { title: 'Create Store' },
       },
       {
         path: 'management',
         component: require('@/views/Store/Management/index').default,
-        name: 'Management',
-        meta: { title: 'Management' },
+        name: 'ManagementStore',
+        meta: { title: 'Management Store' },
       }
     ],
   },
@@ -110,17 +110,17 @@ export const constantRouterMap = [
       {
         path: 'create',
         component: require('@/views/Product/Create/index').default,
-        name: 'Create',
+        name: 'CreateProduct',
         meta: {
-          title: 'Create'
+          title: 'Create Product'
         }
       },
       {
         path: 'management',
         component: require('@/views/Product/Management/index').default,
-        name: 'Management',
+        name: 'ManagementProduct',
         meta: {
-          title: 'Management'
+          title: 'Management Product'
         }
       }
     ]
