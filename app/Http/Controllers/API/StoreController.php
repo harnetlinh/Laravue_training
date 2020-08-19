@@ -71,6 +71,6 @@ class StoreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ///
     }
 }

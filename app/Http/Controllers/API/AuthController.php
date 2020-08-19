@@ -26,5 +26,5 @@ class AuthController extends Controller
     //     else {
     //         return response()->json(["data"=>"Not Login"]);
     //     }
-    // }
+    // }/
 }
