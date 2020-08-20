@@ -47,7 +47,6 @@ return [
             'hash' => false,
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -70,7 +69,7 @@ return [
             'driver' => 'eloquent',
             'model' => Tuandm\Laravue\User::class,
         ],
-
+        //App\User::class
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

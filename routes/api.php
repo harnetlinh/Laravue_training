@@ -18,7 +18,10 @@ Route::namespace('Api')->group(function() {
     {
         Route::apiResource('stores','StoreController');
         Route::apiResource('products','ProductController');
+        Route::apiResource('role','RoleController');
+        Route::apiResource('users','UserController');
         Route::get('products/type/{type}','ProductController@GetByType');
+        Route::get('users/addpermission/{user}','UserController@addPermission');
     });
 });
 Route::get('fakeAPI',function(Request $request){

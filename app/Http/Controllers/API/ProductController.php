@@ -33,6 +33,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user;
+        //$user->isAd
         if($this->ValidData($request))
         {
                 if($request->type_id == 1)
@@ -104,11 +106,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request,Product $product)
     {
+        error_log("USER NAME IN DELETE ". $request->user->name);
         if($product->delete())
-        return response()->json(["message"=>"delete successfully the product has name ".$product->product_name]);
-        else return response()->json(["message"=>"delete error"])->status(501);
+        return response()->json(["message"=>"delete successfully the product has name ".$product->product_name." USER DELETE ".$request->user->name]);
+        else return response()->json(["message"=>"delete error ".$request->user->name])->status(501);
     }
 
     public function GetByType($type)
