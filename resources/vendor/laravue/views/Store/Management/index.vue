@@ -10,6 +10,13 @@
         </template>
       </el-table-column>
       <el-table-column
+        label="Store Type">
+        <template slot-scope="scope">
+          <span v-if="scope.row.TypeStore == 1" style="margin-left: 10px">Canndy</span>
+          <span v-if="scope.row.TypeStore == 2" style="margin-left: 10px">Toy</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         label="Time Create">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
@@ -36,18 +43,92 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="500"
         label="Operations">
         <template slot-scope="{row}">
           <el-button
             size="mini"
-            @click="handleEdit(row)">Edit</el-button>
+            @click="handleAddProduct(row)">Add Product</el-button>
+          <el-button
+            size="mini"
+            @click="handleDeleteProduct(row)">Delete Product</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(row)">Delete</el-button>
+            @click="handleEditStore(row)">Edit Store</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDeleteStore(row)">Delete Store</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog :visible.sync="dialogAddProductVisible" title="Add Product for Store">
+      <el-table
+        ref="multipleTable"
+        :data="tableAdd"
+        style="width: 100%"
+        @selection-change="handleSelectionChange">
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
+        <el-table-column
+          label="Product Name">
+          <template slot-scope="scope">{{ scope.row.ProductName }}</template>
+        </el-table-column>
+        <el-table-column
+          label="Made in">
+          <template slot-scope="scope">{{ scope.row.Madein }}</template>
+        </el-table-column>
+        <el-table-column
+          label="Brand">
+          <template slot-scope="scope">{{ scope.row.Brand }}</template>
+        </el-table-column>
+        <el-table-column
+          label="Price">
+          <template slot-scope="scope">{{ scope.row.Price }}</template>
+        </el-table-column>
+      </el-table>
+      <div class="footer">
+        <el-button @click="dialogAddProductVisible = false">Cannel</el-button>
+        <el-button type="primary" @click="addProduct()">Confirm</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="dialogDeleteProductVisible" title="Delete Product in Store">
+      <el-table
+        ref="multipleTable"
+        :data="tableDelete"
+        style="width: 100%"
+        @selection-change="handleSelectionChange">
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
+        <el-table-column
+          label="Product Name">
+          <template slot-scope="scope">{{ scope.row.ProductName }}</template>
+        </el-table-column>
+        <el-table-column
+          label="Made in">
+          <template slot-scope="scope">{{ scope.row.Madein }}</template>
+        </el-table-column>
+        <el-table-column
+          label="Brand">
+          <template slot-scope="scope">{{ scope.row.Brand }}</template>
+        </el-table-column>
+        <el-table-column
+          label="Price">
+          <template slot-scope="scope">{{ scope.row.Price }}</template>
+        </el-table-column>
+      </el-table>
+      <div class="footer">
+        <el-button @click="dialogDeleteProductVisible = false">Cannel</el-button>
+        <el-button type="primary" @click="deleteProduct()">Delete</el-button>
+      </div>
+    </el-dialog>
 
     <el-dialog :visible.sync="dialogFormVisible" title="Edit">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" style="width: 400px; margin-left:50px;">
@@ -94,15 +175,17 @@ export default {
     return {
       tableData: [
         {
-          id: '1',
+          id: 1,
+          TypeStore: 1,
           StoreName: 'ABC Store',
-          TimeCreate: '20/08/2017',
+          TimeCreate: '02/08/2017',
           Owner: 'Tom',
           Status: true,
           Creator: 'Mr.John'
         },
         {
-          id: '2',
+          id: 2,
+          TypeStore: 1,
           StoreName: 'Apple Store',
           TimeCreate: '01/08/2010',
           Owner: 'Jerry',
@@ -110,17 +193,19 @@ export default {
           Creator: 'Mr.Preter'
         },
         {
-          id: '3',
+          id: 3,
+          TypeStore: 2,
           StoreName: 'Banna Store',
-          TimeCreate: '20/08/2020',
+          TimeCreate: '08/08/2020',
           Owner: 'Cat',
           Status: false,
           Creator: 'Mr.Alex'
         },
         {
-          id: '4',
+          id: 4,
+          TypeStore: 1,
           StoreName: 'Viet Nam Store',
-          TimeCreate: '20/08/2020',
+          TimeCreate: '02/08/2020',
           Owner: 'Dog',
           Status: true,
           Creator: 'Mr.Bean'
@@ -128,27 +213,106 @@ export default {
       ],
       temp: {
         id: undefined,
+        TypeProduct: undefined,
         StoreName: '',
         TimeCreate: '',
         Owner: '',
         Creator: ''
       },
       dialogFormVisible: false,
+      dialogAddProductVisible: false,
+      dialogDeleteProductVisible: false,
       rules: {
-
-      }
+        
+      },
+      multipleSelection: [],
+      tableAdd: [
+        {
+          id: 1,
+          TypeProduct: 1,
+          ProductName: 'Product 1',
+          Madein: 'Viet Nam',
+          Suggar: 50,
+          Brand: 'Company A',
+          Price: 5000
+        },
+        {
+          id: 2,
+          TypeProduct: 1,
+          ProductName: 'Product 2',
+          Madein: 'Viet Nam',
+          Suggar: 50,
+          Brand: 'Company A',
+          Price: 5000
+        }
+      ],
+      tableDelete: [
+        {
+          id: 1,
+          TypeProduct: 1,
+          ProductName: 'Product 1',
+          Madein: 'Viet Nam',
+          Suggar: 50,
+          Brand: 'Company A',
+          Price: 5000
+        },
+        {
+          id: 2,
+          TypeProduct: 1,
+          ProductName: 'Product 2',
+          Madein: 'Viet Nam',
+          Suggar: 50,
+          Brand: 'Company A',
+          Price: 5000
+        }
+      ]
     }
   },
   methods: {
-    handleEdit(row) {
+    handleAddProduct(row) {
       this.temp = Object.assign({}, row);
+      console.log("Add Product TEMP");
+      console.log("Store ID: " + this.temp.id);
+      console.log("Store Type: " + this.temp.TypeStore);
+      this.dialogAddProductVisible = true;
+      this.$nextTick(() => {
+        this.toggleSelection();
+      });
+    },
+    addProduct() {
+      console.log("Add Product SEND");
+      console.log("Store ID: " + this.temp.id);
+      console.log("Store Type: " + this.temp.TypeStore);
+      console.log("List Product: " + this.multipleSelection);
+    },
+    handleDeleteProduct(row) {
+      this.temp = Object.assign({}, row);
+      console.log("Delete Product TEMP");
+      console.log("Store ID: " + this.temp.id);
+      console.log("Store Type: " + this.temp.TypeStore);
+      this.dialogDeleteProductVisible = true;
+      this.$nextTick(() => {
+        this.toggleSelection();
+      });
+    },
+    deleteProduct() {
+      console.log("Delete Product SEND");
+      console.log("Store ID: " + this.temp.id);
+      console.log("Store Type: " + this.temp.TypeStore);
+      console.log("List Product: " + this.multipleSelection);
+    },
+    handleEditStore(row) {
+      this.temp = Object.assign({}, row);
+      console.log("Edit Store TEMP");
+      console.log("Store ID: " + this.temp.id);
+      console.log("Store Type: " + this.temp.TypeStore);
       this.temp.TimeCreate = new Date(this.temp.timestamp);
       this.dialogFormVisible = true;
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate();
       });
     },
-    handleDelete(row) {
+    handleDeleteStore(row) {
       const index = this.tableData.indexOf(row);
       if(this.tableData.splice(index, 1)){
         this.$message({
@@ -178,6 +342,21 @@ export default {
           return false;
         }
       });
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = [];
+      for(var i = 0; i < val.length; i++) {
+        this.multipleSelection.push(val[i].id);
+      }
     }
   }
 }
@@ -185,4 +364,11 @@ export default {
 
 <style>
 
+</style>
+
+<style scoped>
+.footer {
+  margin-top: 20px;
+  text-align: right;
+}
 </style>
