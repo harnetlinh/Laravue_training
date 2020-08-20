@@ -18,18 +18,12 @@ Route::namespace('Api')->group(function() {
     {
         Route::apiResource('stores','StoreController');
         Route::apiResource('products','ProductController');
+        Route::get('products/type/{type}','ProductController@GetByType');
     });
 });
 Route::get('fakeAPI',function(Request $request){
     return response()->json(["data"=>"Fake API"])->header('responseType','json');
 });
-
-// Route::post('signup', 'AuthController@register'); Route::post('login', 'AuthController@login');
-
-// Route::group(['middleware' => 'jwt.auth'], function () { Route::get('auth', 'AuthController@user'); Route::post('logout', 'AuthController@logout'); });
-
-// Route::middleware('jwt.refresh')->get('/token/refresh', 'AuthController@refresh');
-//
 
 
 

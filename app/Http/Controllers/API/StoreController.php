@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
 {
@@ -18,10 +19,10 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(["data"=>"index"]);// StoreResource::collection(Store::all());
-        //ProductResource::collection(Product::all());
+        StoreResource::withoutWrapping();
+        return StoreResource::collection(Store::get()->where('user_id',$request->user->id));
     }
 
     /**
@@ -32,12 +33,11 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find($request->id);
-        return new StoreResource(Store::create([
-            "name"=>"",
-            "type_id"=>$request->type_id,
-            "user_id"=>$request->user(),
-        ]));
+       $Validater = Validator::make($request->all(),[
+            'name' => 'string|required|max:255',
+            'type_id' => '|required|regex:/^[0-9 ]+$/',
+            'user_id' => '|required|regex:/^[0-9 ]+$/'
+       ]);
     }
 
     /**

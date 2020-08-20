@@ -14,11 +14,27 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "ProductID" => $this->product_id,
-            "ProductName" => $this->name,
-            "ProductDesc" => $this->desc,
-            "ProductPrice" => $this->price,
-        ];
+        if($this->type_id == 1)
+        {
+            return [
+                "ProductType" => "Candy",
+                "ProductID" => $this->product_id,
+                "ProductName" => $this->product_name,
+                "ProductDesc" => $this->desc,
+                "ProductPrice" => $this->price,
+                "SugarPercent" => $this->sugar_percent,
+            ];
+        }
+        else 
+        {
+            return [
+                "ProductType" => "Toy",
+                "ProductID" => $this->product_id,
+                "ProductName" => $this->product_name,
+                "ProductDesc" => $this->desc,
+                "ProductPrice" => $this->price,
+                "Material" => $this->material,
+            ];
+        }
     }
 }
